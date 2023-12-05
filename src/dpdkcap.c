@@ -371,20 +371,20 @@ static int port_init(uint8_t port,
 	}
 
 	/* Stats bindings (if more than one queue) */
-	if (dev_info.max_rx_queues > 1) {
-		for (q = 0; q < rx_rings; q++) {
-			retval =
-			    rte_eth_dev_set_rx_queue_stats_mapping(port, q, q);
-			if (retval) {
-				RTE_LOG(WARNING, DPDKCAP,
-					"rte_eth_dev_set_rx_queue_stats_mapping(...):"
-					" %s\n", rte_strerror(-retval));
-				RTE_LOG(WARNING, DPDKCAP,
-					"The queues statistics mapping failed. The "
-					"displayed queue statistics are thus unreliable.\n");
-			}
-		}
-	}
+	// if (dev_info.max_rx_queues > 1) {
+	// 	for (q = 0; q < rx_rings; q++) {
+	// 		retval =
+	// 		    rte_eth_dev_set_rx_queue_stats_mapping(port, q, q);
+	// 		if (retval) {
+	// 			RTE_LOG(WARNING, DPDKCAP,
+	// 				"rte_eth_dev_set_rx_queue_stats_mapping(...):"
+	// 				" %s\n", rte_strerror(-retval));
+	// 			RTE_LOG(WARNING, DPDKCAP,
+	// 				"The queues statistics mapping failed. The "
+	// 				"displayed queue statistics are thus unreliable.\n");
+	// 		}
+	// 	}
+	// }
 
 	/* Enable RX in promiscuous mode for the Ethernet device. */
 	rte_eth_promiscuous_enable(port);
@@ -565,11 +565,11 @@ int main(int argc, char *argv[])
 
 		socket_id = rte_eth_dev_socket_id(port_id);
 		if (socket_id < 0) {
-			rte_exit(EXIT_FAILURE,
-				 "Cannot determine port socket\n");
+			// rte_exit(EXIT_FAILURE,
+				 // "Cannot determine port socket\n");
 			//  } else if (socket_id == 0) {
 			//    RTE_LOG(WARNING,DPDKCAP,"No socket_id for port %d\n",port_id);
-			//    socket_id = SOCKET_ID_ANY;
+			socket_id = SOCKET_ID_ANY;
 		} else {
 			RTE_LOG(INFO, DPDKCAP, "Port %d on socket_id %u\n",
 				port_id, socket_id);
